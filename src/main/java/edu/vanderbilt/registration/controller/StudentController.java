@@ -8,12 +8,18 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+
+/**
+ * This class is responsible for handling all the endpoints
+ * that query or update {@link Student}-related data
+ */
 @RestController
 public class StudentController {
     @Autowired
     private StudentService service;
 
     /**
+     * GET /api/1.0/student
      *
      * @return all existing students
      */
@@ -23,8 +29,11 @@ public class StudentController {
     }
 
     /**
+     * POST /api/1.0/student
      *
-     * @param student request body, the student to create
+     * @param student
+     *         request body, the student to create
+     *
      * @return the student that was just created
      */
     @PostMapping(RegistrationController.STUDENT_PATH)
@@ -33,8 +42,11 @@ public class StudentController {
     }
 
     /**
+     * DELETE /api/1.0/student/{studentId}
      *
-     * @param studentId path param, the student ID to delete
+     * @param studentId
+     *         path param, the student ID to delete
+     *
      * @return the student that was just deleted
      */
     @DeleteMapping(RegistrationController.INDIVIDUAL_STUDENT_PATH)

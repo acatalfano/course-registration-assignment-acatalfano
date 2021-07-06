@@ -1,37 +1,45 @@
 package edu.vanderbilt.registration.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import edu.vanderbilt.registration.model.courseMember.CourseMember;
+import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 
 import javax.persistence.*;
-import java.util.HashSet;
+import java.io.Serializable;
 import java.util.Set;
 
+
 /**
- * Entity representing a {@code Student} object.
- * Consists of
- * {@link Student} and {@link Course}
+ * This class encodes the {@code Student} entity.
+ *
+ * Includes passive-side of One-to-Many mapping
+ * from {@code Student} to {@link CourseMember}
+ * ultimately facilitates a Many-to-Many mapping
+ * to {@link Course}
  */
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Data
-@NoArgsConstructor(force = true)
+@RequiredArgsConstructor
+@AllArgsConstructor
 @Entity
-public class Student {
+@Table(name = "STUDENT")
+public class Student implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 
     private String firstName;
     private String lastName;
     private String profilePhotoUrl;
 
     /**
-     * Owner-side of Many-to-Many mapping relationship between {@link Student} and {@link Course}
+     * passive side of one-to-many link between
+     * between {@code Student} and {@link CourseMember}
      */
-    @ManyToMany(cascade = { CascadeType.ALL })
-    @JoinTable(
-            name = "course_member",
-            joinColumns = { @JoinColumn(name = "student_id")},
-            inverseJoinColumns = { @JoinColumn(name = "course_id" )}
-    )
-    private Set<Course> courses = new HashSet<>();
+    @OneToMany(mappedBy = "student")
+    @JsonIgnore
+    private Set<CourseMember> memberships;
 }

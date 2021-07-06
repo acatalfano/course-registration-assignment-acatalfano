@@ -1,26 +1,44 @@
 package edu.vanderbilt.registration.model;
 
-import lombok.*;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import edu.vanderbilt.registration.model.courseMember.CourseMember;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.RequiredArgsConstructor;
 
 import javax.persistence.*;
-import java.util.HashSet;
+import java.io.Serializable;
 import java.util.Set;
 
+
 /**
- * Entity representing a {@code course}.
- * Contains
+ * This class encodes the {@code Course} entity.
+ *
+ * Includes passive-side of One-to-Many mapping
+ * from {@code Course} to {@link CourseMember}
+ * ultimately facilitates a Many-to-Many mapping
+ * to {@link Student}
  */
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Data
-@NoArgsConstructor(force = true)
+@RequiredArgsConstructor
+@AllArgsConstructor
 @Entity
-public class Course {
+@Table(name = "COURSE")
+public class Course implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 
     private String title;
     private String description;
 
-    @ManyToMany(mappedBy = "courses")
-    Set<Student> students = new HashSet<>();
+    /**
+     * Passive-side of One-to-Many mapping
+     * from {@code Course} to {@link CourseMember}
+     */
+    @OneToMany(mappedBy = "course")
+    @JsonIgnore
+    private Set<CourseMember> memberships;
 }

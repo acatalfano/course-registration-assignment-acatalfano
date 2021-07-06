@@ -12,6 +12,7 @@ import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+
 public class SwaggerUiWebMvcConfigurer implements WebMvcConfigurer {
     private final String baseUrl;
 
@@ -23,8 +24,9 @@ public class SwaggerUiWebMvcConfigurer implements WebMvcConfigurer {
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         String baseUrl = StringUtils.trimTrailingCharacter(this.baseUrl, '/');
         registry.
-                addResourceHandler(baseUrl + "/swagger-ui/**")
-                .addResourceLocations("classpath:/META-INF/resources/webjars/springfox-swagger-ui/")
+                        addResourceHandler(baseUrl + "/swagger-ui/**")
+                .addResourceLocations(
+                        "classpath:/META-INF/resources/webjars/springfox-swagger-ui/")
                 .resourceChain(false);
     }
 
