@@ -1,3 +1,4 @@
+// @@ Nice!
 package edu.vanderbilt.registration.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;

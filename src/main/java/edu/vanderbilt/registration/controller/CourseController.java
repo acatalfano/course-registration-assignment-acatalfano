@@ -55,6 +55,8 @@ public class CourseController {
      */
     @GetMapping(RegistrationController.INDIVIDUAL_COURSE_PATH)
     public List<Student> getStudentsInCourse(@PathVariable(RegistrationController.COURSE_ID_PARAMETER) long courseId) {
+        // @@ I don't think you need to wrap the result of
+        // getStudentsbyCourse() with a new ArrayList<>().
         return new ArrayList<>(service.getStudentsByCourse(courseId));
     }
 
