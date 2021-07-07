@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 
@@ -54,10 +55,8 @@ public class CourseController {
      * @return the course matching the requested courseId
      */
     @GetMapping(RegistrationController.INDIVIDUAL_COURSE_PATH)
-    public List<Student> getStudentsInCourse(@PathVariable(RegistrationController.COURSE_ID_PARAMETER) long courseId) {
-        // @@ I don't think you need to wrap the result of
-        // getStudentsbyCourse() with a new ArrayList<>().
-        return new ArrayList<>(service.getStudentsByCourse(courseId));
+    public Collection<Student> getStudentsInCourse(@PathVariable(RegistrationController.COURSE_ID_PARAMETER) long courseId) {
+        return service.getStudentsByCourse(courseId);
     }
 
     /**
